@@ -1,0 +1,150 @@
+Lepus is an 8 bit CPU with following configurations:
+
+    1. 8 bit address bus => Access 2^8 Locations [0x00] to [0xFF], 
+                            each location being 8 bits wide
+    
+    2. 8 bit data bus, multiplexed and bi-directional.
+
+    3. 32 opcodes encoded in the first 5 bits of an Instruction, next 3 bits 
+       are reserved. Next Byte is the [ADDRESS] in memory.
+       Each Instruction is of fix-width of 16 bits or 2 bytes.
+    
+    4. Segmented Memory: 
+            (i) First 88 Locations are Program Memory [0x00] to [0x57]
+            (ii) Next 8 Locations are Stack Memory [0x58] to [0x5F]
+            (iii) Next 64 locations are for any purpose [0x60] to [0x9F]
+            (iv) Next remaining 96 locations are VIDEO MEMORY [0xA0] to [0xFF]
+
+            This Video Memory will Control a 24 pixel x 24 pixel Screen
+
+    5. All the "Numbers" in the memory will be treated as in their 2's Complement Form
+
+    6. It has 3, 8 bit, registers visible to the programmer: 
+                REG_A => Arithmetic Priviliges
+                REG_B => Logical Priviliges
+                REG_C => Shifting & Counter Priviliges
+
+    7. Instruction Set Architecture: 0x_,_,_,_,_,_,_,_,[ADDRESS]/VAL
+       i.e. the last byte could be ADDRESS or some VALUE
+
+       NOP 00000 No Operation
+
+       A. Move Instructions 
+
+       LDA 00001 LOAD A with *[ADDR]
+       LDB 00010 LOAD B with *[ADDR]
+       LDC 00011 LOAD C with *[ADDR]
+
+      ILDA 00100 LOAD A with VAL
+      ILDB 00101 LOAD B with VAL
+      ILDC 00110 LOAD C with VAL
+
+       WBA 00111 LOAD *[ADDR] with value in A 
+       WBB 01000 LOAD *[ADDR] with value in B 
+
+       OUT 01001 000 A->OUT
+                 001 B->OUT
+                 010 C->OUT
+
+        B. Arithmetic Instructions
+
+        ADD 01010 000 A+B <= A 
+                  001 A+C <= A 
+                  010 A+*[ADDRESS] <= A
+                  011 A+VAL <= A 
+
+        SUB 01011 000 A-B <= A 
+                  001 A-C <= A 
+                  010 A-*[ADDRESS] <= A 
+                  011 A-VAL <= A 
+
+        C. Logical Instructions
+
+        XOR 01100 000 B^A <= B 
+                  001 B^C <= B 
+                  010 B^*[ADDRESS] <= B
+                  011 B^VAL <= B 
+        
+        Same with OR 01101, 
+                  AND 01110
+
+        SHR 01111 LOGICAL SHIFT RIGHT REG_C BY
+            000 VAL Bits 
+            001 *[ADDRESS] Bits 
+
+        ASHR 10000 ARITHMETIC SHIFT RIGHT REG_C BY 
+            000 VAL Bits
+            001 *[ADDRESS] Bits
+
+        SHL 10001 SHIFT LEFT REG_C BY
+            000 VAL Bits
+            001 *[ADDRESS] Bits
+
+        D. Swap Instructions 
+
+        SWPB 10010 SWAP A and B 
+        SWPC 10011 SWAP A and C 
+       SWPBC 10100 SWAP B and C
+
+       E. Decrement Increment Instruction on each Clock Edge*
+
+       INC 10101 000 INCREMENT A by 1
+                 001 INCREMENT B by 1
+                 010 INCREMENT C by 1
+
+                 100 INCREMENT C by VAL 
+                 101 INCREMENT C by *[ADDRESS]
+        
+        DEC 10110 000 DECREMENT A by 1
+                  001 DECREMENT B by 1
+                  010 DECREMENT C by 1
+
+                  100 DECREMENT C by VAL 
+                  101 DECREMENT C by *[ADDRESS]
+
+        F. Stack Instructions
+
+        PUSH 10111 000 PUSH VAL on top of Stack
+                   001 PUSH *[ADDRESS] on top of Stack
+                   010 PUSH A
+                   011 PUSH B 
+                   100 PUSH C 
+                   101 PUSH FLAG_REGISTER 
+
+        POP 11000 000 POP VAL into *[ADDRESS]
+                  001 POP into A 
+                  010 POP into B 
+                  011 POP into C 
+
+        E. Miscellaneous Instructions 
+
+        HALT 11001
+         RET 11010 
+
+        WPORT 11011 Write to PORT 
+        RPORT 11100 Read from PORT
+
+        JMP 11101 000 Unconditional JUMP to [ADDRESS_IN_PROGRAM_MEMORY]
+         JZ       001 JUMP to [ADDRESS_IN_PROGRAM_MEMORY] If ZF=1
+        JNZ       010 JUMP to [ADDRESS_IN_PROGRAM_MEMORY] If ZF=0
+         JC       011 JUMP to [ADDRESS_IN_PROGRAM_MEMORY] If CF=1
+        JNC       100 JUMP to [ADDRESS_IN_PROGRAM_MEMORY] If CF=0
+
+    9. How Stack works ? 
+        Initially SP (Stack Pointer) and BP (Base Pointer) both point at 0x40
+        PUSH: Stack Pointer Moves Up
+        POP: Stack Pointer Moves Down
+        If SP reaches 0x5F and PUSH happens: STACK OVERFLOWS and the PC increments
+        without PUSHING
+
+    10. Registers not visible to programmer include:
+                (a) Memory Address Register MAR 8
+                (b) Program Counter PC 8
+                (c) Instruction Register IR 16 
+                (d) Output Register OR 8
+                (e) Video Output Register? 
+                (f) Control Word Register CWR SIZE_TBD
+                (g) Various Buffer and Tristate Registers
+                (h) Internal Counters
+
+      
