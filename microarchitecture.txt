@@ -1,0 +1,21 @@
+1. The microarchitecture is seperated into two portions:
+       a. Datapath: Comprises of all the bus, registers, buffers, computation 
+          units like the ALU, etc.
+
+       b. Control Unit: An FSM based control unit which will take the contents
+          IR (Instruction Register) as input and outputs the Control Word or
+          the micro-operations necessary for execution
+
+2. The Datapath is further split into three parts: 
+       a. Fetch Unit: Calculates the address, puts it into the PC (Program Counter)
+          then the MAR (Memory Address Register) takes the address and sends it to the
+          memory.
+          The Memory then outputs the Instruction into MDR (Memory Data Register)
+          which then writes it to the IR.
+       b. Register File: REG_A, REG_B, REG_C, SP, BP, DI, FR, OR
+       c. ALU 
+
+3. All units (except the Control Unit) put their Data on the Bus 
+   and all units take data from the bus.
+
+

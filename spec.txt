@@ -116,7 +116,7 @@ Lepus is an 8 bit CPU with following configurations:
                   010 POP into B 
                   011 POP into C 
 
-        E. Miscellaneous Instructions 
+        G. Miscellaneous Instructions 
 
         HALT 11001
          RET 11010 
@@ -131,7 +131,7 @@ Lepus is an 8 bit CPU with following configurations:
         JNC       100 JUMP to [ADDRESS_IN_PROGRAM_MEMORY] If CF=0
 
     9. How Stack works ? 
-        Initially SP (Stack Pointer) and BP (Base Pointer) both point at 0x40
+        Initially SP (Stack Pointer) and BP (Base Pointer) both point at 0x58
         PUSH: Stack Pointer Moves Up
         POP: Stack Pointer Moves Down
         If SP reaches 0x5F and PUSH happens: STACK OVERFLOWS and the PC increments
@@ -143,8 +143,9 @@ Lepus is an 8 bit CPU with following configurations:
                 (c) Instruction Register IR 16 
                 (d) Output Register OR 8
                 (e) Video Output Register? 
-                (f) Control Word Register CWR SIZE_TBD
-                (g) Various Buffer and Tristate Registers
-                (h) Internal Counters
+                (f) Various Buffer and Tristate Registers
+
+    11. Design Principles: 
+        Look at the /microarchitecture.txt file!
 
       
