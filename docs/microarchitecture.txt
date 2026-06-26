@@ -17,5 +17,3 @@
 
 3. All units (except the Control Unit) put their Data on the Bus 
    and all units take data from the bus.
-
-
