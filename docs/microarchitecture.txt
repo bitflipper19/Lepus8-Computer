@@ -17,3 +17,15 @@
 
 3. All units (except the Control Unit) put their Data on the Bus 
    and all units take data from the bus.
+
+4. Microoperations:
+
+      AO register A out
+      AI register A in 
+      ALU_O ALU register out
+      ALU_A_IN ALU register A in
+      ALU_B_IN ALU register B in
+
+      IR_LB_IN IR Lower Byte in
+      IR_HB_IN IR higher Byte in 
+      IR_LB_OUT IR lower byte out 

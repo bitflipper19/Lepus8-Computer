@@ -3,8 +3,8 @@ module LepusALU(
     output reg ZF,
     output reg CF,
     output reg BF,
-    input [7:0] a,
-    input [7:0] b,
+    input signed [7:0] a,
+    input signed [7:0] b,
     input [4:0] opcode
 );
 
@@ -12,7 +12,10 @@ module LepusALU(
                SUB = 5'b01011,
                XOR = 5'b01100,
                OR  = 5'b01101,
-               AND = 5'b01110;
+               AND = 5'b01110,
+               SHR = 5'b01111,
+              ASHR = 5'b10000,
+               SHL = 5'b10001;
 
     wire sub = (opcode == SUB);
 
@@ -38,8 +41,12 @@ module LepusALU(
             end
 
             XOR: result = a ^ b;
-            OR : result = a | b;
+             OR: result = a | b;
             AND: result = a & b;
+
+            SHR: result = a >> b;
+           ASHR: result = a >>> b;
+            SHL: result = a << b;
 
             default: result = 8'h00;
         endcase
