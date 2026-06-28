@@ -1,11 +1,11 @@
 module LepusALU(
-    output reg [7:0] result,
+    inout [7:0] bus,
     output reg ZF,
     output reg CF,
     output reg BF,
-    input signed [7:0] a,
-    input signed [7:0] b,
-    input [4:0] opcode
+    input ENA_A, ENA_B, ALU_RD,
+    input [4:0] opcode,
+    input clk
 );
 
     localparam ADD = 5'b01010,
@@ -17,10 +17,22 @@ module LepusALU(
               ASHR = 5'b10000,
                SHL = 5'b10001;
 
+    reg signed [7:0] a, b;
+    reg [7:0] result;
+
+    always @(posedge clk) begin
+        if(ENA_A) a<=bus;
+        else if(ENA_B) b<=bus;
+        else begin
+            a<=a;
+            b<=b;
+        end
+    end
+
     wire sub = (opcode == SUB);
 
     wire [7:0] b_xor = b ^ {8{sub}};
-    wire [8:0] sum = a + b_xor + sub;
+    wire [8:0] sum = a + b_xor + sub; 
 
     always @(*) begin
         result = 8'h00;
@@ -53,5 +65,7 @@ module LepusALU(
 
         ZF = (result == 8'h00);
     end
+
+    assign bus=ALU_RD? result: 8'bz;
 
 endmodule
