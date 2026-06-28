@@ -29,3 +29,10 @@
       IR_LB_IN IR Lower Byte in
       IR_HB_IN IR higher Byte in 
       IR_LB_OUT IR lower byte out 
+      INC_PC PC++
+      JMP_PC PC gets loaded with the value on bus
+      RD_PC
+      RST_PC
+
+5. Control Signals are asserted/changed on negative edge so they are stable on the
+   positive edge for required units.
