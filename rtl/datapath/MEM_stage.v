@@ -1,6 +1,7 @@
 module MEM_stage(
     inout [7:0] bus,
     input ADDR_RD, ADDR_WR, DATA_RD, DATA_WR,
+    input STACK_PUSH, STACK_POP,
     input clk
 );
 
@@ -15,6 +16,13 @@ module MEM_stage(
         .bus(bus),
         .wr(DATA_WR),
         .rd(DATA_RD),
+        .clk(clk)
+    );
+
+    register stack_pointer(
+        .bus(bus),
+        .wr(STACK_PUSH),
+        .rd(STACK_POP),
         .clk(clk)
     );
 
