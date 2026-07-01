@@ -118,11 +118,11 @@ Lepus is an 8 bit CPU with following configurations:
 
         G. Miscellaneous Instructions 
 
-        HALT 11001
-         RET 11010 
+        // HALT 11001
+        // RET 11010 
 
-        WPORT 11011 Write to PORT 
-        RPORT 11100 Read from PORT
+        // WPORT 11011 Write to PORT 
+        // RPORT 11100 Read from PORT
 
         JMP 11101 000 Unconditional JUMP to [ADDRESS_IN_PROGRAM_MEMORY]
          JZ       001 JUMP to [ADDRESS_IN_PROGRAM_MEMORY] If ZF=1
@@ -140,9 +140,9 @@ Lepus is an 8 bit CPU with following configurations:
     10. Registers not visible to programmer include:
                 (a) Memory Address Register MAR 8
                 (b) Program Counter PC 8
-                (c) Instruction Register IR 16 
+                (c) Instruction Register IR 16
                 (d) Output Register OR 8
-                (e) Video Output Register? 
+                (e) Video Output Register?
                 (f) Various Buffer and Tristate Registers
 
     11. Design Principles: 
