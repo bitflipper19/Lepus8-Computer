@@ -18,13 +18,14 @@ module Control_Unit(
     output RO, RI, ADDR 
     // And some more signals
 );
-    localparam T0 = 3'b0,
-               T1 = 3'b1,
-               T2 = 3'b2,
-               T3 = 3'b3,
-               T4 = 3'b4,
-               T5 = 3'b5,
-               T6 = 3'b6;
+    localparam T0 = 3'b000,
+               T1 = 3'b001,
+               T2 = 3'b010,
+               T3 = 3'b011,
+               T4 = 3'b100,
+               T5 = 3'b101,
+               T6 = 3'b110,
+               T7 = 3'b111;
     
     // The Instruction fetch control logic, all signals update at negative edge 
     // because the Tstate counter is negedge triggered 
