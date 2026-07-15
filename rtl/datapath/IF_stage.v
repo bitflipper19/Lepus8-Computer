@@ -2,7 +2,7 @@ module Instruction_Fetch(
     inout [7:0] bus,
     output [7:0] opcode,
     input WR_HB, WR_LB, RD_LB,
-    input PC_INC, PC_JMP, PC_RD, PC_IR_RST, PC_OP_FETCH,
+    input PC_INC, PC_JMP, PC_RD, PC_IR_RST_N, PC_OP_FETCH,
     input clk
 );
 
@@ -12,7 +12,7 @@ module Instruction_Fetch(
         .inc(PC_INC),
         .jmp(PC_JMP),
         .clk(clk),
-        .rst_n(PC_IR_RST),
+        .rst_n(PC_IR_RST_N),
         .op_fetch(PC_OP_FETCH)
     );
 
@@ -23,7 +23,7 @@ module Instruction_Fetch(
         .WR_LB(WR_LB),
         .RD_LB(RD_LB),
         .clk(clk),
-        .rst_n(PC_IR_RST)
+        .rst_n(PC_IR_RST_N)
     );
 
 endmodule

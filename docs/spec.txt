@@ -20,11 +20,11 @@ Lepus is an 8 bit CPU with following configurations:
     5. All the "Numbers" in the memory will be treated as in their 2's Complement Form
 
     6. It has 3, 8 bit, registers visible to the programmer: 
-                REG_A => Arithmetic Priviliges
-                REG_B => Logical Priviliges
-                REG_C => Shifting & Counter Priviliges
+                REG_A => Arithmetic Privileges
+                REG_B => Logical Privileges
+                REG_C => Shifting & Counter Privileges
 
-    7. Instruction Set Architecture: 0x_,_,_,_,_,_,_,_,[ADDRESS]/VAL
+    7. Instruction Set Architecture: _,_,_,_,_,_,_,_,[ADDRESS]/VAL
        i.e. the last byte could be ADDRESS or some VALUE
 
        NOP 00000 No Operation

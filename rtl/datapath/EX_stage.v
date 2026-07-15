@@ -3,7 +3,7 @@ module Instruction_Execute(
     output ZF, CF, BF,
     input [4:0] opcode,
     input A_RD, A_WR, B_RD, B_WR, C_RD, C_WR,
-    input ENA_A, ENA_B, ALU_RD
+    input ENA_A, ENA_B, ALU_RD,
     input clk
 );
 
